@@ -1,7 +1,4 @@
----
-title: weex_todo
-tags: 小书匠,更新
----
+# weex_todo
 
 ## 一个小型的项目，帮助新手熟悉weex的基本用法
 
