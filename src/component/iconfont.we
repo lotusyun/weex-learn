@@ -44,7 +44,7 @@
     module.exports = {
         created: function() {
             /* 提示没有addRule这个方法  */
-
+            /* 经查阅最新api确实没有这个方法 */
             /* ----------------------------  */
 
             /*var domModule = require('@weex-module/dom');
