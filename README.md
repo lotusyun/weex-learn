@@ -25,7 +25,7 @@ http://localhost:8080/
 
 也可以直接通过在命令行中执行weex ./src/tech_list.we看到效果
 
-![enter description here][1]
+![](image/888.png)
 
 ### 开发
 
