@@ -1,0 +1,78 @@
+<we-element name="foo">
+    <template>
+        <div>
+            <image class="img" onclick="test" src="{{imageUrl}}" alt="子元素"></image>
+            <text>{{title}}</text>
+        </div>
+    </template>
+
+    <style>
+        .img {
+            width: 750;
+            height: 200;
+        }
+    </style>
+
+    <script>
+        module.exports = {
+            data: {
+                title: '子-父',
+                imageUrl: '',
+                clickNumber: 0
+            },
+            methods: {
+                test: function(){
+                    this.$dispatch('notify', {
+                        clickNumber: this.clickNumber
+                    });
+                    this.clickNumber++;
+                }
+            }
+        }
+    </script>
+</we-element>
+
+<template>
+    <div>
+        <div class="communicate-container">
+            <text>{{title}}</text>
+            <text if="number">子元素点击次数: {{number}}次</text>
+        </div>
+
+        <foo image-url="http://bgl.zbjimg.com/bgl%2Fbjclound%2F2016081507.png%2Forigine%2F59fcd33a-732d-429b-bc68-8509640d0f0c?imageMogr2/auto-orient/strip/quality/90"></foo>
+    </div>
+
+    <!--
+     本例:采用了同一个文件中定义子父组件之间的定义方式:
+     <we-element name="组件名"></we-element>
+     <template><组件名></组件名></template>
+
+     image-url 通过在父组件中直接赋值给子组件,中划线链接,读取的时候用 {{imageUrl}} 的方式.
+
+     通信 子->父:  this.$dispatch('消息类型', {消息对象})
+         父组件或其中的任何子组件通过  this.$on('消息类型',function(e){ e.detail }) 注册并监听事件,执行回调函数,
+         e.detail 中便是传递过来的消息数据.
+     -->
+</template>
+
+<style>
+    .communicate-container {
+        flex-direction: row;
+    }
+</style>
+
+<script>
+    module.exports = {
+        data: {
+            title: '父级',
+            imageUrl: '',
+            number: 0
+        },
+        created: function(){
+            this.$on('notify', function(e){
+                console.log(e.detail);
+                this.number = e.detail.clickNumber;
+            });
+        }
+    }
+</script>

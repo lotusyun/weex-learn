@@ -1,0 +1,192 @@
+<template>
+    <container class="father">
+        <text class="enjoy">猜您喜欢</text>
+        <div class="cell" repeat="{{itemList}}">
+            <a href="http://baidu.com" class="flex-container">
+                <image class="thumb" src="{{picUrl}}"></image>
+
+
+                <!-- 遇到问题:cell列表除了image\text 的方式,其他较复杂的布局,显示不出内容,怎么破? -->
+                <div class="text">
+                    <text class="title">{{title}}</text>
+                    <div class="price">
+                        <text class="f-color-orange">￥{{price}}</text>
+                        <text class="f-color-grey">已省{{save}}元</text>
+                    </div>
+                    <div class="box">
+                        <div class="label item">
+                            <text class="item-inner">打造爆款</text>
+                            <text class="item-inner">企业</text>
+                            <text class="item-inner">雇主保障</text>
+                        </div>
+                        <div class="address item">
+                            <text class="address-item-inner">{{city}} | 成交 {{number}}</text>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+
+        <!-- 滚动组件 -->
+        <text style="text-align: center;margin-top: 10">滚动加载.....</text>
+
+        <scroller class="scroller">
+            <div repeat="{{list}}">
+                <text>{{name}}: {{price}}</text>
+            </div>
+        </scroller>
+
+
+
+
+        <switch-button></switch-button>
+    </container>
+</template>
+
+<style>
+    .flex-container {
+        flex-direction: row;
+        /* 宽度100% 没有生效 */
+        width: 100%;
+        /* 由于每个div都是weex-container,导致每个元素都是display:flex,宽度就超出父级的宽度,
+        试过display:inherit; width: 100%等都无效, 最后设置 flex: 1解决问题. */
+        flex: 1;
+    }
+    .enjoy {
+        text-align: center;
+        margin-top: 10;
+    }
+    .father {
+        overflow: hidden;
+    }
+    .cell {
+        border-bottom: 1px solid #aaa;
+        margin-top: 20;
+        padding-left: 20;
+        padding-bottom: 20;
+        padding-right: 20;
+    }
+    .cell,.price {
+        flex-direction: row;
+    }
+    .thumb {
+        width: 170;
+        height: 170;
+        margin-right: 20;
+    }
+    .text {
+        flex: 1;
+        color: #000;
+        /* 在item外层加了a标签之后,需要重写内部样式 */
+    }
+    .title {
+        height: 72;
+        font-size: 28;
+        line-height: 38;
+        margin-bottom: 10px;
+    }
+    .f-color-grey {
+        color: #b0b0b0;
+        font-size: 24;
+        margin-left: 10;
+    }
+    .f-color-orange {
+        color: #ff6600;
+        font-size: 28;
+    }
+    /*标签*/
+    .box {
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 20;
+    }
+    .item-inner{
+        font-size: 24;
+        color: #339ef3;
+        border: 1px solid #ccc;
+        border-color: #339ef3;
+        padding: 2;
+        margin-right: 4px;
+    }
+    .label {
+        flex-direction: row;
+    }
+    .address-item-inner {
+        font-size: 24;
+        /*overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;*/
+    }
+    .scroller {
+        height: 200;
+        margin: 10;
+    }
+</style>
+
+<script>
+    module.exports = {
+        data: {
+            itemList: [{
+                picUrl: 'https://ss0.baidu.com/7Po3dSag_xI4khGko9WTAnF6hhy/super/pic/item/359b033b5bb5c9ea5ab03642dd39b6003bf3b3cb.jpg',
+                title: '【热门推荐套餐】收藏淘宝天猫宝贝店铺淘宝推广微淘粉丝',
+                price: 48.00,
+                save: 2.0,
+                city: '四川',
+                number: 32432345
+            },{
+                picUrl: 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2006511040,1656033524&fm=80',
+                title: '【淘宝推广热门推荐套餐】收藏流量销量打造爆款包月网店铺推广',
+                price: 48.00,
+                save: 2.0,
+                city: '重庆',
+                number: 355
+            },{
+                picUrl: 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=762036346,2495714970&fm=80',
+                title: '阿里巴巴天猫淘宝宝贝收藏送店铺爆款收藏网店人气流量关注推广',
+                price: 48.00,
+                save: 2.0,
+                city: '安徽',
+                number: 5647
+            },{
+                picUrl: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2374982385,3270025697&fm=80',
+                title: '【热门推荐套餐】收藏淘宝天猫宝贝店铺淘宝推广微淘粉丝',
+                price: 48.00,
+                save: 2.0,
+                city: '宁夏',
+                number: 2343556
+            }],
+            list: [{
+                name: '品牌街',
+                price: '只挑大牌服务商'
+            },{
+                name: '惠体验',
+                price: '品质服务 一元体验'
+            },{
+                name: '品牌街',
+                price: '只挑大牌服务商'
+            },{
+                name: '惠体验',
+                price: '品质服务 一元体验'
+            },{
+                name: '品牌街',
+                price: '只挑大牌服务商'
+            },{
+                name: '惠体验',
+                price: '品质服务 一元体验'
+            },{
+                name: '品牌街',
+                price: '只挑大牌服务商'
+            },{
+                name: '惠体验',
+                price: '品质服务 一元体验'
+            },{
+                name: '品牌街',
+                price: '只挑大牌服务商'
+            },{
+                name: '惠体验',
+                price: '品质服务 一元体验'
+            }]
+        }
+    }
+</script>

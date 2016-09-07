@@ -1,0 +1,83 @@
+<we-element name="baby1">
+    <template>
+        <div>
+            <text>{{title}}</text>
+        </div>
+    </template>
+
+    <style>
+        .img {
+            width: 750;
+            height: 200;
+        }
+    </style>
+
+    <script>
+        module.exports = {
+            data: {
+                title: '',
+                clickNumber: 0
+            },
+            created: function(){
+                this.$on('callbaby11', function(e){
+                    this.title = e.detail.a;
+                    console.log('baby1' + e.detail);
+                });
+
+            }
+        }
+    </script>
+</we-element>
+
+<we-element name="baby2">
+    <template>
+        <div>
+            <text onclick="callbaby1">{{title}}</text>
+        </div>
+    </template>
+
+    <script>
+        module.exports = {
+            data: {
+                title: '兄弟元素'
+            },
+            methods: {
+                callbaby1: function(){
+                    this.$dispatch('callbaby1', {
+                        a: 1
+                    })
+                }
+            }
+        }
+    </script>
+</we-element>
+
+<template>
+    <div>
+        <baby1></baby1>
+        <baby2></baby2>
+    </div>
+
+    <!--
+     兄弟元素通过公共的父级元素作为桥梁传递信息.
+     兄弟元素一用派发的方式传递信息给父级元素: this.$dispatch(),  主动触发, 定义函数放在methods自定义的方法中.
+     父级元素接受消息: this.$on();   创建时就注册监听函数,放在created方法中. 并在监听时的回调函数中执行广播 this.$broadcast();
+     兄弟元素二在创建时注册监听来自父级元素广播而来的消息类型  this.$on().
+
+     注意:  由 (兄弟元素二 )  ->  (父级元素)  -> (兄弟元素一)  之间定义的消息类型名字不能像官方https://github.com/weexteam/article/issues/16 这个示例那样定义成统一的一个名字, 那样会导致派发出去的消息被父级元素接受到,再广播出去的时候不仅兄弟元素一能接受,父级元素自身也能接受,最终导致死循环.  所以正确的传递消息的路径应该是 (兄弟元素二 )  ->  (父级元素),再由 (父级元素)  -> (兄弟元素一) 这样的单链路传递.
+
+     -->
+</template>
+
+
+<script>
+    module.exports = {
+        created: function(){
+            var self = this;
+            this.$on('callbaby1', function(e){
+                console.log(e.detail)
+                self.$broadcast('callbaby11', e.detail);
+            });
+        }
+    }
+</script>

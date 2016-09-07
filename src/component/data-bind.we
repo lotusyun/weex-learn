@@ -1,0 +1,29 @@
+<template>
+    <container class="data-bind-container">
+        <text onclick="toggle">Toggle</text>
+        <image class="img" src="http://ubmcmm.baidustatic.com/media/v1/0f000Qtw4wK2h_FhTOCDe6.jpg" if="shown" alt=""></image>
+    </container>
+</template>
+
+<style>
+    .data-bind-container {
+        flex-direction: row;
+    }
+    .img {
+        width: 500;
+        height: 500;
+    }
+</style>
+
+<script>
+    module.exports = {
+        data: {
+            shown: true
+        },
+        methods: {
+            toggle : function(){
+                this.shown = !this.shown;
+            }
+        }
+    }
+</script>

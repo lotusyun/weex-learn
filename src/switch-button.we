@@ -1,0 +1,70 @@
+<template>
+    <div>
+        <text style="text-align: center">注册表单</text>
+        <div class="form">
+            <div class="item">
+                <text>邮箱:</text>
+                <input
+                        class="input"
+                        type="url"
+                        autofocus="true"
+                        placeholder="..."
+                        value="http://XXX@zhuabjie.com"
+                        style="placeholder-color: #666666;">
+                </input>
+            </div>
+
+            <div class="item">
+                <text>
+                    姓名:
+                </text>
+                <input
+                        class="input"
+                        type="text"
+                        placeholder="李四">
+                </input>
+            </div>
+            <div class="item switch">
+                <text>是否加入保密协议</text>
+                <switch checked="true">muted:</switch>
+            </div>
+            <text class="button bg-orange">注册</text>
+        </div>
+    </div>
+
+</template>
+
+<style>
+    .form {
+        padding: 20;
+    }
+    .item {
+        flex-direction: row;
+        margin-bottom: 10;
+        height: 50;
+        line-height: 50;
+    }
+    .input {
+        width: 600;
+        font-size: 32;
+        border: 1px solid #aaa;
+    }
+    .switch {
+        justify-content: space-between;
+    }
+    .button {
+        display: inline-block;
+        width: 200;
+        height: 30;
+        padding: 10;
+        border: 1px solid #aaa;
+        border-radius: 6;
+        box-sizing: content-box;
+        text-align: center;
+        align-self: center;
+    }
+    .bg-orange {
+        background-color: #ff6600;
+        color: #fff;
+    }
+</style>

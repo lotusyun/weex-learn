@@ -1,0 +1,94 @@
+<we-element name="foo1">
+    <template>
+        <div>
+            <image class="img" src="{{imageUrl}}" alt="子元素"></image>
+        </div>
+    </template>
+
+    <style>
+        .img {
+            width: 750;
+            height: 200;
+        }
+    </style>
+
+    <script>
+        module.exports = {
+            data: {
+                imageUrl: ''
+            },
+            created: function(){
+                var that = this;
+                console.log('foo1')
+                this.$on('changeImage', function(e){
+                    console.log(e.detail);
+                    that.imageUrl = e.detail.imageUrl
+                });
+            }
+        }
+    </script>
+</we-element>
+
+<we-element name="bar">
+    <template>
+        <div>
+            <foo1></foo1>
+            <text>{{title}}</text>
+        </div>
+    </template>
+
+    <script>
+        module.exports = {
+            data: {
+                title: '子-父'
+            },
+            created: function(){
+                var that = this;
+                console.log('bar')
+                this.$on('changeTitle',function(e){
+                    console.log(e.detail);
+                    that.title = e.detail.title;
+                });
+            }
+        }
+    </script>
+</we-element>
+
+<template>
+    <div>
+        <text onclick="test">click to update foo</text>
+        <bar></bar>
+    </div>
+
+    <!--
+     本例:采用了同一个文件中定义子父组件之间的定义方式:
+     <we-element name="组件名"></we-element>
+     <template><组件名></组件名></template>
+
+     通信 父->子:  this.$broadcast('消息类型', {消息对象})
+         父组件把消息传递给所有子组件,包含层层嵌套的组件,组件通过  this.$on('消息类型',function(e){ e.detail }) 注册并监听事件,执行回调函数,
+         e.detail 中便是传递过来的消息数据.
+
+     中途由于把子组件中的监听的函数$on写在了methods里面,导致怎么也执行不了.这点要特别注意,这里意味着一创建的时候就要给组件绑定事件监听了, created方法应该也在module.exports下面,与data同级. 这里的created方法也可以被替换成init.详细区分应该看看生命周期那节.
+
+     <we-element name="foo1"></we-element> 以这种方式命名的并在同一文件内引用,注意组件名name属性中的值不要与其他组件重名了,否则会在js执行过程中报错,程序会自动全局校验,检查组件名的唯一性.而不管是通过外部引用组件的方式(这里都拿外层的那个列表组件为例,require('../list-thumb-text.we'); 哪怕是不同目录结构构建了同一名称的组件,只要是在这一个应用中执行),还是内部引用已经存在的的外部定义好的组件名(<we-element name="list"></we-element>),都是不允许的.
+     -->
+
+
+</template>
+
+
+<script>
+    module.exports = {
+        methods: {
+            test: function(){
+                this.$broadcast('changeTitle', {
+                    title: '子元素'
+                });
+                this.$broadcast('changeImage', {
+                    imageUrl: 'http://mobilenewwap.zbjimg.com/mobile%2Fnewwap%2F1.jpg%2Forigine%2Fe6612733-e1e4-4448-882c-dbeffe007c97'
+                });
+            }
+        }
+    }
+</script>

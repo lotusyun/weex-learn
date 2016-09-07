@@ -1,0 +1,76 @@
+<template>
+    <container>
+        <div style="flex-direction: column;">
+            <slider class="slider" interval="{{intervalValue}}" auto-play="{{isAutoPlay}}" >
+                <image class="slider-pages" repeat="{{itemList}}" src="{{pictureUrl}}"></image>
+                <indicator style="top: 80"></indicator>
+            </slider>
+        </div>
+        <list-thumb-text></list-thumb-text>
+        <iconfont></iconfont>
+        <modal></modal>
+
+        <!-- 数据绑定,事件绑定 -->
+        <data-bind></data-bind>
+
+        <!-- 数据双向绑定 -->
+        <data-communicate-child-father></data-communicate-child-father>
+        <data-communicate-father-child></data-communicate-father-child>
+        <data-communicate-brother></data-communicate-brother>
+        <!-- 加载更多-->
+        <load-list></load-list>
+    </container>
+</template>
+
+<style>
+    .slider {
+        width: 750;
+        height: 200;
+    }
+    .slider-pages {
+        flex-direction: row;
+        width: 750;
+        height: 200;
+    }
+    /* 遗留问题:幻灯的indicator距顶部距离怎么设置才能生效?  解决:indicator上直接设置style,top为目标值除以2 */
+</style>
+
+<script>
+    require('./component/iconfont.we');
+    require('./component/modal.we');
+    //数据绑定
+    require('./component/data-bind.we');
+    //组件之间数据通信
+    require('./component/data-communicate-child-father.we');
+    require('./component/data-communicate-father-child.we');
+    require('./component/data-communicate-brother.we');
+    //加载更多
+    require('./component/load-list.we');
+    module.exports = {
+        data: {
+            intervalValue:"3000",
+            isShowIndicators:"true",
+            isAutoPlay:"true",
+            itemList: [
+                {
+                    link: 'https://sojump.com/m/9361140.aspx?zbj.com',
+                    pictureUrl: 'http://d.youth.cn/shrgch/201608/W020160830345709259446.jpg'
+                },{
+                    link: 'http://zt.zbj.com/dist/20160826-1329/index.html',
+                    pictureUrl: 'http://photocdn.sohu.com/20160830/Img466723544.jpg'
+                },{
+                    link: 'http://zt.zbj.com/dist/20160826-1334/index.html',
+                    pictureUrl: 'http://photocdn.sohu.com/20160830/Img466723539.jpg'
+                }
+            ]
+        },
+        styles: {
+
+        },
+        methods: {
+            goWeexSite: function () {
+                this.$openURL('http://alibaba.github.io/weex/')
+            }
+        }
+    }
+</script>

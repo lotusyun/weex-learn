@@ -1,0 +1,48 @@
+<template>
+    <list>
+        <cell repeat="{{v in items}}" track-by="id">
+            <text>{{v.name}}</text>
+        </cell>
+        <loading class="loading" onLoading="loadingHandler">
+            <text>{{loadingText}}</text>
+        </loading>
+    </list>
+</template>
+
+<script>
+    module.exports = {
+        data: {
+            index: 0,
+            size: 50,
+            count: 1,
+            loadingText: '加载更多...',
+            items: []
+        },
+        created: function(){
+            this.addPage()
+        },
+        methods: {
+            addPage: function(){
+                for(var i = 0; i < this.size; i++) {
+                    var id = this.index * this.size + i;
+                    this.items.push({
+                        id: id,
+                        name: 'item-' + id
+                    });
+                }
+                this.index++;
+            },
+            loadingHandler: function(){
+                console.log(this.index);
+                //this.index 当前页数
+                //this.count 总页数
+                //http://www.w2bc.com/article/155728
+                if(this.index === this.count) {
+                    this.loadingText = '没有更多了';
+                }else{
+                    this.addPage();
+                }
+            }
+        }
+    }
+</script>

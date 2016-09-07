@@ -1,0 +1,70 @@
+<template>
+    <div>
+        <text onclick="toast" class="button">点我toast</text>
+        <text onclick="alert" class="button">点我alert</text>
+        <text onclick="confirm" class="button">点我confirm</text>
+        <text onclick="prompt" class="button">点我prompt</text>
+    </div>
+</template>
+
+<style>
+    .button {
+        display: inline-block;
+        width: 200;
+        height: 30;
+        border: 1px solid #aaa;
+        padding: 10;
+        border-radius: 6;
+        box-sizing: content-box;
+        margin-bottom: 10;
+    }
+</style>
+
+<script>
+    var toastMessage = 'I am toast!',
+            alertArg = 'I am alert!',
+            confirmArg = 'I am confirm',
+            promptArg = 'I am prompt',
+            ok = 'I am ok',
+            cancel = 'I am cancel';
+
+    var modal = require('@weex-module/modal');
+
+    module.exports = {
+        methods: {
+            toast: function(){
+                console.log('aaa');
+                modal.toast({
+                    message: toastMessage,
+                    duration: 1
+                });
+            },
+            alert: function(){
+                modal.alert({
+                    message: alertArg,
+                    okTitle: ok
+                },function(e){
+                    alert(e.status + ',' + e.data);
+                });
+            },
+            confirm: function(){
+                modal.confirm({
+                    message: confirmArg,
+                    okTitle: ok,
+                    cancelTitle: cancel
+                },function(e){
+                    alert(e.status + ',' + e.data);
+                });
+            },
+            prompt: function(){
+                modal.prompt({
+                    message: promptArg,
+                    okTitle: ok,
+                    cancelTitle: cancel
+                }, function(e){
+                    alert(e.status + ',' + e.data);
+                });
+            }
+        }
+    }
+</script>
